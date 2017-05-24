@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"io/ioutil"
 	"fmt"
+	"os"
 )
 
 func main() {
@@ -11,6 +12,7 @@ func main() {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		dat, _ := ioutil.ReadFile("./response.json")
 		fmt.Fprint(w, string(dat))
+		os.Rename("./response.json", "./response.json.bak")
 	})
 
 	http.ListenAndServe(":8080", mux)
